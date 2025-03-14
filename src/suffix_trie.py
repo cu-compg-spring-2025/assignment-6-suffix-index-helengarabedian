@@ -1,5 +1,8 @@
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import argparse
-import utils
+from . import utils
 
 def get_args():
     parser = argparse.ArgumentParser(description='Suffix Trie')
@@ -19,13 +22,27 @@ def get_args():
 
     return parser.parse_args()
 
-def build_suffix_trie(s):
-    # YOUR CODE HERE
-    return None
+def build_suffix_trie(text):
+    trie = {}
+    for i in range(len(text)):
+        node = trie
+        for c in text[i:]:
+            if c not in node:
+                node[c] = {}
+            node = node[c]
+    return trie
 
 def search_trie(trie, pattern):
-    # YOUR CODE HERE
-    return None
+    node = trie
+    count = 0
+    for c in pattern:
+        if c in node:
+            count += 1
+            node = node[c]
+        else:
+            break
+    return count
+
 
 def main():
     args = get_args()
